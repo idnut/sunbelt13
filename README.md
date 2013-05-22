@@ -1,4 +1,4 @@
 sunbelt13
 =========
 
-This repo contains my SUNBELT 2013 conference presentation slides, STATA scripts and regression tables
+This repo contains SUNBELT 2013 (Hamburg) conference presentation slides, STATA scripts and regression tables.
