@@ -1,0 +1,727 @@
+/*
+NETWISE ANALYSIS
+DATASET 1 (networks larger or equal than 1
+DATASET: CASnetwise_04132013MI.dta
+*/ 
+
+clear all
+use "C:\Users\Ann Tunde\Documents\My Box Files\CAS\analysis\netwise_model\final\CASnetwise_04132013MI.dta"  	
+log using "C:\Users\Ann Tunde\Documents\My Box Files\CAS\analysis\netwise_model\final\networkmodelsV1_04142013MI.txt", text replace				
+mi rename Cleanx1 EFemale, noupdate
+mi rename Cleana9 Eage, noupdate
+mi rename Cleana4 ELivedThere, noupdate
+mi rename Cleana12 ECitizen, noupdate
+mi rename Cleana13 EUsborncitizen, noupdate
+mi rename Cleana15 UsEntry, noupdate
+mi rename Cleana16 EParentsborn, noupdate
+mi rename Cleana18 ERelig, noupdate
+mi rename Cleang4_int EEduc, noupdate
+mi rename Cleang16 ENrChildren04, noupdate
+mi rename Cleang17 ENrChildren517, noupdate
+mi rename Cleang22 ELanguage, noupdate
+
+*generate additional variables
+mi passive: generate Eage2 = Eage * Eage
+mi passive: generate black = (Cleana10==2) 
+mi passive: generate hispanic = (Cleana10==3) 
+mi passive: generate asian = (Cleana10==4) 
+mi passive: generate other = (Cleana10==5) 
+mi passive: generate noncitizen = (ECitizen == 0)
+mi passive: generate naturalizedcitizen = (ECitizen == 1 & EUsborncitizen == 0)
+mi passive: generate generation12 = (EParentsborn ==0)
+mi passive: generate before86 = (UsEntry <=1986)
+mi passive: generate after86 = (UsEntry > 1986 & UsEntry < 9999)
+
+/*
+predictors:	new_B11_5scale MeanAge PropLocal PropPolitics PropKin Coworker PropFemale PropNonWhite PropCollegeBachelor 
+background variables: EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+community variable: new_B11_5scale community_id
+immigration variables: noncitizen EUsborncitizen naturalizedcitizen generation12 before86 after86
+*/
+/*-----------
+NETWORK SIZE
+-------------*/
+    eststo clear
+
+	eststo: mi estimate, post: regress new_B11_5scale ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+/*---------------
+outcome: MeanAge
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress MeanAge ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+/*---------------
+outcome: PropLocal
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropLocal ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropLocal ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropLocal ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropLocal ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropLocal ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropLocal ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+
+/*---------------
+outcome: PropKin
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropKin ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+				
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+	
+
+/*---------------
+outcome: Coworker
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: logit Coworker ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se	
+
+	
+/*---------------
+outcome: PropFemale
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropFemale ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se	
+	
+/*---------------
+outcome: PropNonWhite
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropNonWhite ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropNonWhite ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropNonWhite ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropNonWhite ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropNonWhite ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropNonWhite ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se		
+
+/*---------------
+outcome: PropCollegeBachelor 
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropCollegeBachelor  ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropCollegeBachelor  ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropCollegeBachelor  ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropCollegeBachelor  ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropCollegeBachelor  ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropCollegeBachelor  ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se		
+
+	
+clear all
+use "C:\Users\Ann Tunde\Documents\My Box Files\CAS\analysis\netwise_model\final\PropHouseholdMI.dta"
+mi rename Cleanx1 EFemale, noupdate
+mi rename Cleana9 Eage, noupdate
+mi rename Cleana4 ELivedThere, noupdate
+mi rename Cleana12 ECitizen, noupdate
+mi rename Cleana13 EUsborncitizen, noupdate
+mi rename Cleana15 UsEntry, noupdate
+mi rename Cleana16 EParentsborn, noupdate
+mi rename Cleana18 ERelig, noupdate
+mi rename Cleang4_int EEduc, noupdate
+mi rename Cleang16 ENrChildren04, noupdate
+mi rename Cleang17 ENrChildren517, noupdate
+mi rename Cleang22 ELanguage, noupdate
+
+*generate additional variables
+mi passive: generate Eage2 = Eage * Eage
+mi passive: generate black = (Cleana10==2) 
+mi passive: generate hispanic = (Cleana10==3) 
+mi passive: generate asian = (Cleana10==4) 
+mi passive: generate other = (Cleana10==5) 
+mi passive: generate noncitizen = (ECitizen == 0)
+mi passive: generate naturalizedcitizen = (ECitizen == 1 & EUsborncitizen == 0)
+mi passive: generate generation12 = (EParentsborn ==0)
+mi passive: generate before86 = (UsEntry <=1986)
+mi passive: generate after86 = (UsEntry > 1986 & UsEntry < 9999)
+
+/*---------------
+outcome: PropHousehold
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropHousehold ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropHousehold ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropHousehold ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropHousehold ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropHousehold ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropHousehold ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+
+	
+clear all
+use "C:\Users\Ann Tunde\Documents\My Box Files\CAS\analysis\netwise_model\final\PropHoodMI.dta"
+mi rename Cleanx1 EFemale, noupdate
+mi rename Cleana9 Eage, noupdate
+mi rename Cleana4 ELivedThere, noupdate
+mi rename Cleana12 ECitizen, noupdate
+mi rename Cleana13 EUsborncitizen, noupdate
+mi rename Cleana15 UsEntry, noupdate
+mi rename Cleana16 EParentsborn, noupdate
+mi rename Cleana18 ERelig, noupdate
+mi rename Cleang4_int EEduc, noupdate
+mi rename Cleang16 ENrChildren04, noupdate
+mi rename Cleang17 ENrChildren517, noupdate
+mi rename Cleang22 ELanguage, noupdate
+
+*generate additional variables
+mi passive: generate Eage2 = Eage * Eage
+mi passive: generate black = (Cleana10==2) 
+mi passive: generate hispanic = (Cleana10==3) 
+mi passive: generate asian = (Cleana10==4) 
+mi passive: generate other = (Cleana10==5) 
+mi passive: generate noncitizen = (ECitizen == 0)
+mi passive: generate naturalizedcitizen = (ECitizen == 1 & EUsborncitizen == 0)
+mi passive: generate generation12 = (EParentsborn ==0)
+mi passive: generate before86 = (UsEntry <=1986)
+mi passive: generate after86 = (UsEntry > 1986 & UsEntry < 9999)
+
+/*---------------
+outcome: PropHood
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropHood ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropHood ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropHood ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropHood ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropHood ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropHood ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+	log close
+
+*ANALYSIS N>2
+clear all
+use "C:\Users\Ann Tunde\Documents\My Box Files\CAS\analysis\netwise_model\final\CASnetwise_04132013densityMI"
+log using "C:\Users\Ann Tunde\Documents\My Box Files\CAS\analysis\netwise_model\final\networkmodelsV2_04142013MI.txt", text replace	
+/*
+NETWISE ANALYSIS
+DATASET 2 (networks larger or equal than 1
+DATASET: CASnetwise_04132013densityMI.dta
+*/
+
+mi rename Cleanx1 EFemale, noupdate
+mi rename Cleana9 Eage, noupdate
+mi rename Cleana4 ELivedThere, noupdate
+mi rename Cleana12 ECitizen, noupdate
+mi rename Cleana13 EUsborncitizen, noupdate
+mi rename Cleana15 UsEntry, noupdate
+mi rename Cleana16 EParentsborn, noupdate
+mi rename Cleana18 ERelig, noupdate
+mi rename Cleang4_int EEduc, noupdate
+mi rename Cleang16 ENrChildren04, noupdate
+mi rename Cleang17 ENrChildren517, noupdate
+mi rename Cleang22 ELanguage, noupdate
+
+*generate additional variables
+mi passive: generate Eage2 = Eage * Eage
+mi passive: generate black = (Cleana10==2) 
+mi passive: generate hispanic = (Cleana10==3) 
+mi passive: generate asian = (Cleana10==4) 
+mi passive: generate other = (Cleana10==5) 
+mi passive: generate noncitizen = (ECitizen == 0)
+mi passive: generate naturalizedcitizen = (ECitizen == 1 & EUsborncitizen == 0)
+mi passive: generate generation12 = (EParentsborn ==0)
+mi passive: generate before86 = (UsEntry <=1986)
+mi passive: generate after86 = (UsEntry > 1986 & UsEntry < 9999)
+
+*outcomes DensityCat LCatHeterog EducHeterog RaceHeterog MeanAge PropPolitics PropKin Coworker PropFemale
+
+*NETWORK SIZE
+eststo clear
+
+	eststo: mi estimate, post: regress new_B11_5scale ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress new_B11_5scale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+*DENSITY
+eststo clear
+
+	eststo: mi estimate, post: regress DensityCat ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress DensityCat ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress DensityCat ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress DensityCat ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress DensityCat ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress DensityCat ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+	
+*LOCATION HETEROGENEITY
+eststo clear
+
+	eststo: mi estimate, post: regress LCatHeterog ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress LCatHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress LCatHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress LCatHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress LCatHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress LCatHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+	
+*EDUCATIONAL HETEROGENEITY
+eststo clear
+
+	eststo: mi estimate, post: regress EducHeterog ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress EducHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress EducHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress EducHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress EducHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress EducHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+	
+*RACE HETEROGENEITY
+eststo clear
+
+	eststo: mi estimate, post: regress RaceHeterog ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress RaceHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress RaceHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress RaceHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress RaceHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress RaceHeterog ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+*MEAN AGE
+eststo clear
+
+	eststo: mi estimate, post: regress MeanAge ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress MeanAge ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+	
+*PROPORTION KIN (N>2)
+eststo clear
+
+	eststo: mi estimate, post: regress PropKin ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropKin ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+
+	*ANY COWORKER IN THE NETWORK
+eststo clear
+
+	eststo: mi estimate, post: logit Coworker ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: logit Coworker ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se
+
+	*PROPOTION FEMALE
+	
+ /*---------------
+outcome: PropFemale
+-----------------*/
+
+    eststo clear
+
+	eststo: mi estimate, post: regress PropFemale ///
+	        EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other 
+									   
+									   
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			noncitizen						   
+	
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+			EUsborncitizen
+			
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        naturalizedcitizen
+			
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	        before86 after86
+			
+	eststo: mi estimate, post: regress PropFemale ///
+            EFemale Eage Eage2 ELivedThere ERelig EEduc working1 partnered  ENrChildren04 ENrChildren517 ELanguage black hispanic asian other  ///
+	         generation12
+			
+	esttab, se	
+	
+log close
